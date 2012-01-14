@@ -1,4 +1,5 @@
-package de.htwg_konstanz.betcalculator.unit
+package de.htwg_konstanz.betcalculator
+
 import org.scalatest.matchers._
 import org.scalatest._
 
