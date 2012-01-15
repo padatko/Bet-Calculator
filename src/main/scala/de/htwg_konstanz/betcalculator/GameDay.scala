@@ -1,12 +1,10 @@
 package de.htwg_konstanz.betcalculator
 
-import java.util.Date
-
-final case class GameDay (no: Option[Int] = None, games: Option[Array[Game]] = None) {
+final case class GameDay (no: Int, games: List[Game]) {
 	override def toString = {
-	  var result = no.get + ". Spieltag "
+	  var result = no + ". Spieltag "
 	  val newline = System.getProperty("line.separator")
-	  games.get.foreach(game => result += newline + game.toString()) 	
+	  games.foreach(game => result += newline + game.toString()) 	
 	  result
 	}
 }

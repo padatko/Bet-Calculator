@@ -1,0 +1,14 @@
+
+<BetCalculator>
+<GameDay>
+	<no>1</no>
+	<Game>
+		<id>1</id>
+		<homeTeam>FC Bayern Muenchen</homeTeam>
+		<awayTeam>Borussia Dortmund</awayTeam>
+		<homeOdds>1.1</homeOdds>
+		<awayOdds>1.7</awayOdds>
+		<tieOdds>1.3</tieOdds>
+	</Game>
+</GameDay>
+</BetCalculator>

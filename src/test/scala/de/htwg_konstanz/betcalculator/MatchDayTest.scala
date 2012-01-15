@@ -5,31 +5,24 @@ class MatchDayTest extends UnitTestConfiguration  {
   
   val newline = System.getProperty("line.separator")
   
-  test("All gameday members should be none") {
-    val gameday = GameDay()
-    import gameday._
-    val members = List(no, games)
-    members forall { None == } should be(true)
-  }
-  
   test("toString function should match committed paramaters") {
     val date = new Date()
-    val games = new Array[Game](2)
-    games(0) = Game(Some(1), Some("FC Bayern Muenchen"), Some("Borussia Dortmund"))
-    games(1) = Game(Some(2), Some("Werder Bremen"), Some("Hamburger SV"))
-    val gameday = GameDay(Some(2), Some(games))
+    val gameOne = Game(1, "FC Bayern Muenchen", "Borussia Dortmund", 1.8, 1.2, 1.3)
+    val gameTwo = Game(2, "Werder Bremen", "Hamburger SV", 1.4, 2.1, 1.9)
+    val games = List[Game](gameOne, gameTwo)
+    val gameday = GameDay(2, games)
     val expectedGameday = "2. Spieltag " + newline +
-    		"1 | FC Bayern Muenchen vs Borussia Dortmund" + newline +
-    		"2 | Werder Bremen vs Hamburger SV"
+    		"1 | FC Bayern Muenchen (1,80) vs (1,20) Borussia Dortmund (1,30)" + newline +
+    		"2 | Werder Bremen (1,40) vs (2,10) Hamburger SV (1,90)"
       
     gameday.toString() should be(expectedGameday)
   }
   
   test("toString for a simple game") {
-    val game = Game(Some(1), Some("FC Bayern Muenchen"), Some("Borussia Dortmund"))
-    val expectedGame = "1 | FC Bayern Muenchen vs Borussia Dortmund"
+    val game = Game(1, "FC Bayern Muenchen", "Borussia Dortmund", 1.8, 1.4, 2.1)
+    val expectedGame = "1 | FC Bayern Muenchen (1,80) vs (1,40) Borussia Dortmund (2,10)"
       
-      game.toString() should be (expectedGame)
+    game.toString() should be (expectedGame)
   }
   
 }

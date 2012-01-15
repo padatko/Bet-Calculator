@@ -1,8 +1,7 @@
 package de.htwg_konstanz.betcalculator
 
-final case class Game(no: Option[Int], teamHome: Option[String], teamAway: Option[String]) {
+final case class Game(no: Int, teamHome: String, teamAway: String, homeOdds: Double, tieOdds: Double, awayOdds: Double) {
   override def toString = {
-    var result = no.get + " | " + teamHome.get + " vs " + teamAway.get
-    result
+    """%d | %s (%.2f) vs (%.2f) %s (%.2f)""".stripMargin.format(no, teamHome, homeOdds, tieOdds, teamAway, awayOdds)
   }
 }
