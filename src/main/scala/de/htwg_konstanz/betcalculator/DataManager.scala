@@ -1,36 +1,26 @@
 package de.htwg_konstanz.betcalculator
-import scala.xml.XML
+
+import scala.xml._
 
 class DataManager(file: String) {
-  
-  def loadFromXmlFile = parseXml(XML.load(file))
-  
-  private def parseXml(xml: scala.xml.Elem) : List[GameDay] = {
-    var data = List[GameDay]()
-    val rootNode = xml\\"BetCalculator"
-    val gamedayNodes = rootNode\\"GameDay"
-    gamedayNodes.foreach(gameday => {
-      val no = (gameday\"no").text.toInt
-      var games = List[Game]()
-      val gameNodes = gameday\\"Game"
-      gameNodes.foreach(game => {
-        val id = (game\"id").text.toInt
-        val homeTeam = (game\"homeTeam").text
-        val awayTeam = (game\"awayTeam").text
-        val homeOdds = (game\"homeOdds").text.toFloat
-        val awayOdds = (game\"awayOdds").text.toFloat
-        val tieOdds = (game\"tieOdds").text.toFloat
-        games ::= Game(id, homeTeam, awayTeam, homeOdds, tieOdds, awayOdds)
-      })
-      data ::= GameDay(no, games)
-    })
-    
-    data
-  }
-  
-  def getData = {
-    loadFromXmlFile
-    
-  }
+  def getData = parseXml(XML.load(file))
 
+  private def parseXml(xml: Elem) = parseBetCalculator(xml \\ "BetCalculator")
+  private def parseBetCalculator(betCalculatorNode: NodeSeq) = parseGameDays(betCalculatorNode \\ "GameDay")
+
+  private def parseGameDays(gameDayNodes: NodeSeq) =
+    for (gameDay <- gameDayNodes)
+      yield GameDay(
+      no = (gameDay \ "no").text.toInt,
+      games = parseGames(gameDay \\ "Game").toList)
+
+  private def parseGames(gameNodes: NodeSeq) =
+    for (game <- gameNodes)
+      yield Game(
+      no = (game \ "id").text.toInt,
+      teamHome = (game \ "homeTeam").text,
+      teamAway = (game \ "awayTeam").text,
+      homeOdds = (game \ "homeOdds").text.toDouble,
+      tieOdds = (game \ "tieOdds").text.toDouble,
+      awayOdds = (game \ "awayOdds").text.toDouble)
 }
