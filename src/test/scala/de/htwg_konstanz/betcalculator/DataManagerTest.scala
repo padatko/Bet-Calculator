@@ -1,7 +1,7 @@
 package de.htwg_konstanz.betcalculator
 
 class DataManagerTest extends UnitTestConfiguration with ThingsNeededForTests {
-  test("src/test/resources/test.xml should be corretly parsed") {
+  ignore("src/test/resources/test.xml should be corretly parsed") {
     val manager = new DataManager("src/test/resources/test.xml")
 
     val games = List(

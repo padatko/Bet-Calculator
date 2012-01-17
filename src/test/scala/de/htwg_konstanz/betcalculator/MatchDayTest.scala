@@ -5,7 +5,7 @@ import java.util.Date
 class MatchDayTest extends UnitTestConfiguration with ThingsNeededForTests{
   val newline = System.getProperty("line.separator")
  
-  test("toString should match committed paramaters") {
+  ignore("toString should match committed paramaters") {
     val date = new Date
     val gameOne = Game(1, "FC Bayern Muenchen", "Borussia Dortmund", 1.8, 1.2, 1.3)
     val gameTwo = Game(2, "Werder Bremen", "Hamburger SV", 1.4, 2.1, 1.9)
@@ -18,7 +18,7 @@ class MatchDayTest extends UnitTestConfiguration with ThingsNeededForTests{
     gameday.toString should be(expectedGameday)
   }
 
-  test("toString of a simple game") {
+  ignore("toString of a simple game") {
     val actualGame = Game(1, "FC Bayern Muenchen", "Borussia Dortmund", 1.8, 1.4, 2.1)
     val expectedString = "1 | FC Bayern Muenchen (1" + delimeter + "80) vs (1" + delimeter + "40) Borussia Dortmund (2" + delimeter + "10)"
     actualGame.toString should be(expectedString)
