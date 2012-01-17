@@ -1,8 +1,9 @@
 package de.htwg_konstanz.betcalculator
-import scala.xml.Elem
+
+import scala.xml._
 
 abstract class Reader {
-  def readData
+  def readData: Elem
 }
 
 abstract class Parser {
