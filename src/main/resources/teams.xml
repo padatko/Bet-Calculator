@@ -1,0 +1,15 @@
+
+<BetCalculator type="teams">
+<Team>
+	<id>1</id>
+	<name>FC Bayern Muenchen</name>
+</Team>
+<Team>
+	<id>2</id>
+	<name>Borussia Dortmund</name>
+</Team>
+<Team>
+	<id>3</id>
+	<name>FC Schalke 04</name>
+</Team>
+</BetCalculator>

@@ -1,8 +1,8 @@
 package de.htwg_konstanz.betcalculator
 import scala.xml.XML
 
-class FileReader(file: String) extends Reader {
-  override def readData = {
+object FileReader extends Reader {
+  override def readData(file: String) = {
     XML.load(file)
   }
 
