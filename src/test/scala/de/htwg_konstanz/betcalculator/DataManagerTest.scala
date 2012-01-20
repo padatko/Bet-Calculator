@@ -1,7 +1,7 @@
 package de.htwg_konstanz.betcalculator
 
 class DataManagerTest extends UnitTestConfiguration with ThingsNeededForTests {
-  ignore("src/test/resources/test.xml should be corretly parsed") {
-
+  test("src/test/resources/test.xml should be corretly parsed") {
+    DataManager.getTeamName(1) should be("FC Bayern Muenchen")
   }
 }

@@ -1,7 +1,6 @@
 package de.htwg_konstanz.betcalculator
 
 import scala.xml._
-
 abstract class XmlParser[A] {
   final def parseData(xml: Elem): A = parseXml(xml)
   protected final def parseXml(xml: Elem): A = parseBetCalculator(xml \\ "BetCalculator")

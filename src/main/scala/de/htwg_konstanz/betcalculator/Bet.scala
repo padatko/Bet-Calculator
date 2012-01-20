@@ -1,3 +1,3 @@
 package de.htwg_konstanz.betcalculator
 
-class Bet(gameId: Int, quote: Double) { }
+final case class Bet(teamId: Int, quote: Double) 

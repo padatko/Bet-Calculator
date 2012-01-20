@@ -1,14 +1,11 @@
 package de.htwg_konstanz.betcalculator
 
-import scala.xml._
-
-class DataManager() {
+object DataManager {
+  val teamsInXml = FileReader.readData("src/main/resources/teams.xml")
+  val matchesInXml = FileReader.readData("src/main/resources/matches.xml")
+  val teams = XmlTeamsParser.parseData(teamsInXml)
+  val matches = XmlMatchesParser.parseData(matchesInXml)
   
-  
-  def initializeData = {
-    val teamsInXml = FileReader.readData("src/main/resources/teams.xml")
-    val matchesInXml = FileReader.readData("src/main/resources/matches.xml")
-  }
-
-
+  def getTeamName(id: Int): String = teams(id)
+  def getMatches: Seq[GameDay] = matches
 }
