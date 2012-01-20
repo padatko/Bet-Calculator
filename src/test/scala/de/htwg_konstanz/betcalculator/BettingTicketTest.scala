@@ -90,15 +90,15 @@ class BettingSessionTest extends UnitTestConfiguration {
     actualSystem should be(expectedSystem)
   }
 
-  test("Choose winning bets and verify result2") {
+  test("Choose winning bets and verify result") {
     bettingSession.chooseGameDay(1)
     bettingSession.chooseGame(1)
     bettingSession.placeBet(2)
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
-    bettingSession.placeWinningBets(List(1))
+    bettingSession.placeWinningBets(List(2))
     val actualWinningBets = bettingSession.winningBets
-    val expectedWinningBets = Map(1->"bla")
+    val expectedWinningBets = Map(2->Bet(0,1.9))
 
     actualWinningBets should be(expectedWinningBets)
   }

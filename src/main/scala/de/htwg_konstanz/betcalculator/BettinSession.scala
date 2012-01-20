@@ -62,8 +62,5 @@ class BettingSession {
     case 2 => addBet(chosenGame.no, Bet(chosenGame.teamAway, chosenGame.awayOdds))
   }
 
-  def placeWinningBets(winningBetsIds: List[Int]): Unit = {
-    winningBets_ = bets_.filterKeys( winningBets.contains(_))
-    winningBets_ foreach println
-  }
+  def placeWinningBets(winningBetsIds: List[Int]): Unit = winningBets_ = bets_.filterKeys(winningBetsIds.contains(_))
 }
