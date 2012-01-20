@@ -3,11 +3,9 @@ package de.htwg_konstanz.betcalculator
 class BettingSession {
 
   private var bets_ = Map[Int, Bet]()
-  private var winningBets_ = Map[Int, Bet]()
 
   private def addBet(gameId: Int, bet: Bet) = bets_ += gameId -> bet
   def bets: Map[Int,Bet] = bets_
-  def winningBets: Map[Int,Bet] = winningBets_
   def calculateCombinationNumbers: List[Int] = (2 to bets.size - 1).toList
   def clearList(): Unit = bets_.empty
 
@@ -62,5 +60,9 @@ class BettingSession {
     case 2 => addBet(chosenGame.no, Bet(chosenGame.teamAway, chosenGame.awayOdds))
   }
 
-  def placeWinningBets(winningBetsIds: List[Int]): Unit = winningBets_ = bets_.filterKeys(winningBetsIds.contains(_))
+  def placeWinningBets(winningBetsIds: List[Int]): Unit = {
+    winningBetsIds.foreach( e => bets_(e).winning = true)
+  }
+
+  def calculateResult: Set[RowQuotes] = { null }
 }

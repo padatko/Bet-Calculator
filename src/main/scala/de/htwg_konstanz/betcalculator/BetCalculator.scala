@@ -1,10 +1,21 @@
 package de.htwg_konstanz.betcalculator
 
-object BetCalculator {
-  def createCombinations(quotes: Set[Double], combinationsAmount: Int): Set[Set[Double]] = {
+class BetCalculator(
+  val allBets: Map[Int, Bet],
+  val systemCombination: Int) {
+
+  def createCombinations(quotes: Set[Double], systemCombination: Int): Set[Set[Double]] = {
     require(quotes.size > 2)
-    require(combinationsAmount > 1 && combinationsAmount < quotes.size)
-    quotes.toList.combinations(combinationsAmount).toSet map { (list: List[Double]) => list.toSet }
+    require(systemCombination > 1 && systemCombination < quotes.size)
+    quotes.toList.combinations(systemCombination).toSet map { (list: List[Double]) => list.toSet }
+  }
+
+  def createCombinations2: Set[Set[Bet]] = {
+    require(allBets.size > 2)
+    require(systemCombination > 1 && systemCombination < allBets.size)
+    allBets.values.toList.combinations(systemCombination).toSet map { (t: List[Bet] => t.toSet)}
+//    allBets.combinations(systemCombination).toSet map { (list: List[Bet]) => list.toSet }
+//    allBets.values.toList.combinations(systemCombination).toSet map { (list: List[Double]) => list.toSet }
   }
 
   def calculateOverallQuote(combinations: Set[Set[Double]]): Set[RowQuotes] = combinations map {

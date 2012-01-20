@@ -97,14 +97,13 @@ class BettingSessionTest extends UnitTestConfiguration {
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
     bettingSession.placeWinningBets(List(2))
-    val actualWinningBets = bettingSession.winningBets
-    val expectedWinningBets = Map(2->Bet(0,1.9))
+    val actualWinningBets = bettingSession.bets
+    val expectedWinningBets = Map(1 -> Bet(2, 1.7), 2 -> Bet(0, 1.9, true))
 
     actualWinningBets should be(expectedWinningBets)
   }
 
-
-  ignore("Set betting amount and verify result") {
+  test("Set betting amount and verify result") {
     val expectedBettingAmount = 10.00
     bettingSession.setBettingAmount(expectedBettingAmount)
     val actualBettingAmount = bettingSession.bettingAmount
@@ -112,6 +111,21 @@ class BettingSessionTest extends UnitTestConfiguration {
     actualBettingAmount should be(expectedBettingAmount)
   }
 
-  ignore("Calculate result") {}
+  test("Calculate combinations with 3 games, 2 right choices and a 2 of 3 System") {
+    bettingSession.chooseGameDay(1)
+    bettingSession.chooseGame(1)
+    bettingSession.placeBet(2)
+    bettingSession.chooseGame(2)
+    bettingSession.placeBet(0)
+    bettingSession.chooseGame(3)
+    bettingSession.placeBet(0)
+    bettingSession.chooseSystem(2)
+    bettingSession.setBettingAmount(10.00)
+    //    val combinations = BetCalculator.createCombinations(Set(1.7,1.9,1.3),2)
+    //    val expectedCalculation = BetCalculator.calculateOverallQuote(combinations)
+    val actualCalculation = bettingSession.calculateResult
+
+//    actualCalculation should be(expectedCalculation)
+  }
 
 }

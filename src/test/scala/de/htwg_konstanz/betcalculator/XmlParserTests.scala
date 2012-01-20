@@ -13,7 +13,8 @@ class XmlMatchesParserTests extends UnitTestConfiguration {
   test("parsing of matches xml file should match given list") {
     val games = List(
       Game(1, 1, 2, 1.1, 1.3, 1.7),
-      Game(2, 3, 4, 1.5, 1.9, 1.1))
+      Game(2, 3, 4, 1.5, 1.9, 1.1),
+      Game(3, 5, 6, 1.2, 1.3, 1.8))
 
     val expectedMatches = List(GameDay(1, games))
     val actualMatches = XmlMatchesParser.parseData(FileReader.readData("src/test/resources/matches.xml"))
