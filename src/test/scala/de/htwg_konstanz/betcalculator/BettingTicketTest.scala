@@ -124,7 +124,7 @@ class BettingSessionTest extends UnitTestConfiguration {
     bettingSession.setBettingAmount(10.00)
     //    val combinations = BetCalculator.createCombinations(Set(1.7,1.9,1.3),2)
     //    val expectedCalculation = BetCalculator.calculateOverallQuote(combinations)
-    val actualCalculation = bettingSession.calculateResult
+    //val actualCalculation = bettingSession.calculateResult
 
 //    actualCalculation should be(expectedCalculation)
   }
