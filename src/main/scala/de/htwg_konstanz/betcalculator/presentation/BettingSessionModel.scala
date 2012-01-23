@@ -1,14 +1,19 @@
-package de.htwg_konstanz.betcalculator
+package de.htwg_konstanz.betcalculator.presentation
+import de.htwg_konstanz.betcalculator._
 
-class BettingSession {
+class BettingSession extends BaseModel {
 
   private var bets_ = Map[Int, Bet]()
 
-  private def addBet(gameId: Int, bet: Bet) = bets_ += gameId -> bet
-  def bets: Map[Int,Bet] = bets_
+  private def addBet(gameId: Int, bet: Bet) = {
+    bets_ += gameId -> bet
+    chosenGame = null
+  }
+  def bets: Map[Int, Bet] = bets_
   def calculateCombinationNumbers: List[Int] = (2 to bets.size - 1).toList
   def clearList(): Unit = bets_.empty
 
+  def getGameDays: List[GameDay] = DataManager.getMatches.toList
 
   def chooseGameDay(id: Int): Unit = {
     def optionalGameDay = DataManager.getMatches find { e => e.no == id }
@@ -53,7 +58,6 @@ class BettingSession {
     bettingAmount_ = amount
   }
 
-
   def placeBet(choice: Int): Unit = choice match {
     case 1 => addBet(chosenGame.no, Bet(chosenGame.teamHome, chosenGame.homeOdds))
     case 0 => addBet(chosenGame.no, Bet(0, chosenGame.tieOdds))
@@ -61,8 +65,11 @@ class BettingSession {
   }
 
   def placeWinningBets(winningBetsIds: List[Int]): Unit = {
-    winningBetsIds.foreach( e => bets_(e).winning = true)
+    winningBetsIds.foreach(e => bets_(e).winning = true)
   }
 
-  def calculateResult: Set[RowQuotes] = { null }
+  def calculateResult: Set[RowWinnings] = {
+    val calculator = new BetCalculator(bets, chosenSystem, bettingAmount)
+    calculator.calculateOverallWinnings(calculator.createCombinations)
+  }
 }

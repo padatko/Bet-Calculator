@@ -12,4 +12,64 @@
 	<id>3</id>
 	<name>FC Schalke 04</name>
 </Team>
+<Team>
+	<id>4</id>
+	<name>Borussia M'Gladbach</name>
+</Team>
+<Team>
+	<id>5</id>
+	<name>Werder Bremen</name>
+</Team>
+<Team>
+	<id>6</id>
+	<name>Bayer Leverkusen</name>
+</Team>
+<Team>
+	<id>7</id>
+	<name>Hannover 96</name>
+</Team>
+<Team>
+	<id>8</id>
+	<name>1899 Hoffenheim</name>
+</Team>
+<Team>
+	<id>9</id>
+	<name>VfL Wolfsburg</name>
+</Team>
+<Team>
+	<id>10</id>
+	<name>VfB Stuttgart</name>
+</Team>
+<Team>
+	<id>11</id>
+	<name>1. FC Koeln</name>
+</Team>
+<Team>
+	<id>12</id>
+	<name>1. FC Nuernberg</name>
+</Team>
+<Team>
+	<id>13</id>
+	<name>Hertha BSC</name>
+</Team>
+<Team>
+	<id>14</id>
+	<name>Hamburger SV</name>
+</Team>
+<Team>
+	<id>15</id>
+	<name>1. FSV Mainz</name>
+</Team>
+<Team>
+	<id>16</id>
+	<name>1. FC Kaiserslautern</name>
+</Team>
+<Team>
+	<id>17</id>
+	<name>SC Freiburg</name>
+</Team>
+<Team>
+	<id>18</id>
+	<name>FC Augsburg</name>
+</Team>
 </BetCalculator>

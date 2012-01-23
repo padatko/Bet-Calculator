@@ -1,4 +1,5 @@
 package de.htwg_konstanz.betcalculator
+import de.htwg_konstanz.betcalculator.presentation.BettingSession
 
 class BettingSessionTest extends UnitTestConfiguration {
 
@@ -117,7 +118,7 @@ class BettingSessionTest extends UnitTestConfiguration {
     bettingSession.placeBet(2)
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
-    bettingSession.chooseGame(3)
+    bettingSession.chooseGame(1)
     bettingSession.placeBet(0)
     bettingSession.chooseSystem(2)
     bettingSession.setBettingAmount(10.00)

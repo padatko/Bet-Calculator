@@ -19,4 +19,23 @@
 		<awayOdds>1.1</awayOdds>
 	</Game>
 </GameDay>
+<GameDay>
+	<no>2</no>
+	<Game>
+		<id>25</id>
+		<homeTeam>1</homeTeam>
+		<awayTeam>2</awayTeam>
+		<homeOdds>1.1</homeOdds>
+		<tieOdds>1.3</tieOdds>
+		<awayOdds>1.7</awayOdds>
+	</Game>
+	<Game>
+		<id>2</id>
+		<homeTeam>3</homeTeam>
+		<awayTeam>4</awayTeam>
+		<homeOdds>1.5</homeOdds>
+		<tieOdds>1.9</tieOdds>
+		<awayOdds>1.1</awayOdds>
+	</Game>
+</GameDay>
 </BetCalculator>

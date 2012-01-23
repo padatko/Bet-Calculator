@@ -6,6 +6,11 @@ object DataManager {
   val teams = XmlTeamsParser.parseData(teamsInXml)
   val matches = XmlMatchesParser.parseData(matchesInXml)
   
-  def getTeamName(id: Int): String = teams(id)
+  def getTeamName(id: Int): String = {
+    id match {
+      case 0 => "X"
+      case no => teams(no)
+    }
+  }
   def getMatches: Seq[GameDay] = matches
 }
