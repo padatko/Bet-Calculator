@@ -10,19 +10,19 @@ class BettingSessionTest extends UnitTestConfiguration {
   }
 
   test("Given 4 bets, calculateCombinationNumbers should return 2 possible combinations") {
-    //    bettingSession.addBet(new Bet(1, 2.0))
-    //    bettingSession.addBet(new Bet(2, 4.0))
-    //    bettingSession.addBet(new Bet(3, 6.0))
-    //    bettingSession.addBet(new Bet(4, 5.0))
-    //    val expectedNumbers = List(2, 3)
-    //    val actualNumbers = bettingSession.calculateCombinationNumbers
-    //
-    //    actualNumbers should be(expectedNumbers)
+//        bettingSession.addBet(new Bet(1, 2.0))
+//        bettingSession.addBet(new Bet(2, 4.0))
+//        bettingSession.addBet(new Bet(3, 6.0))
+//        bettingSession.addBet(new Bet(4, 5.0))
+//        val expectedNumbers = List(2, 3)
+//        val actualNumbers = bettingSession.calculateCombinationNumbers
+//    
+//        actualNumbers should be(expectedNumbers)
   }
 
   test("Given 4 bets, clearList should remove all elements and calculateCombinationsNumbers should return empty list") {
     val expectedNumbers = List[Int]()
-    bettingSession.clearList()
+    bettingSession.clearList
     val actualNumbers = bettingSession.calculateCombinationNumbers
 
     actualNumbers should be(expectedNumbers)

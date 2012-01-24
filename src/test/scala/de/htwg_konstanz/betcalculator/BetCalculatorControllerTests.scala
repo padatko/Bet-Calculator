@@ -13,14 +13,14 @@ class BetCalculatorControllerTests extends UnitTestConfiguration {
   }
 
   test("Set gameday and verify chosenGameDay") {
-    controller.chooseGameDay(2)
+    controller.chooseGameDay(19)
     val actualChosenGameDay = controller.chosenGameDay
 
-    actualChosenGameDay.no should be(2)
+    actualChosenGameDay.no should be(19)
   }
 
   test("Set game and verify chosenGame") {
-    controller.chooseGameDay(1)
+    controller.chooseGameDay(19)
     controller.chooseGame(1)
     val actualChosenGame = controller.chosenGame
 
@@ -28,11 +28,11 @@ class BetCalculatorControllerTests extends UnitTestConfiguration {
   }
 
   test("Set game, place bet and verify chosenGame") {
-    controller.chooseGameDay(1)
+    controller.chooseGameDay(19)
     controller.chooseGame(1)
     controller.placeBet(2)
     val actualPlacedBets = controller.getBets
-    val expectedPlacedBets = Map(1 -> Bet(2, 1.7))
+    val expectedPlacedBets = Map(1 -> Bet(12, 3.55))
 
     actualPlacedBets should be(expectedPlacedBets)
   }
@@ -44,12 +44,14 @@ class BetCalculatorControllerTests extends UnitTestConfiguration {
 
     actualWager should be(expectedWager)
   }
-  
-    test("Place system and verify it") {
+
+  test("Place system and verify it") {
     controller.chooseSystem(2)
     val actualSystem = controller.chosenSystem
     val expectedSystem = 2
 
     actualSystem should be(expectedSystem)
   }
+
+
 }

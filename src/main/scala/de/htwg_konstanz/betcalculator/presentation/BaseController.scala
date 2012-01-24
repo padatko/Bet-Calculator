@@ -16,4 +16,5 @@ abstract class BaseController {
   def placeBet(choice: Int): Unit
   def placeWinningBets(winningBetsIds: List[Int]): Unit
   def calculateResult: Set[RowWinnings]
+  def clearList: Unit
 }

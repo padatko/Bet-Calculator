@@ -7,11 +7,10 @@ class BettingSession extends BaseModel {
 
   private def addBet(gameId: Int, bet: Bet) = {
     bets_ += gameId -> bet
-    chosenGame = null
   }
   def bets: Map[Int, Bet] = bets_
   def calculateCombinationNumbers: List[Int] = (2 to bets.size - 1).toList
-  def clearList(): Unit = bets_.empty
+  def clearList: Unit = bets_ = Map[Int,Bet]()
 
   def getGameDays: List[GameDay] = DataManager.getMatches.toList
 
@@ -65,7 +64,13 @@ class BettingSession extends BaseModel {
   }
 
   def placeWinningBets(winningBetsIds: List[Int]): Unit = {
-    winningBetsIds.foreach(e => bets_(e).winning = true)
+    //winningBetsIds.foreach(e => bets_(e).winning = true)
+    bets.foreach( e => 
+      if(winningBetsIds.contains(e._1)) {
+        e._2.winning = true
+      } else {
+        e._2.winning = false
+      })
   }
 
   def calculateResult: Set[RowWinnings] = {

@@ -307,19 +307,25 @@ class BetCalculatorView(var controller: BaseController) {
         writeLine("To calculate a result, you have to place a wager and choose a system")(RED)
         active = false
       } else {
+        writeLine("======================================")(YELLOW)
+        writeLine("============== YOUR RESULT ===========")(YELLOW)
+        writeLine("======================================")(YELLOW)
         controller.calculateResult.foreach { row =>
           row.combination.foreach {
             quote =>
-              print(" | ")
-              (if (quote.winning == true) print((GREEN) + quote.quote) else print((RED) + quote.quote))
-              print(" | ")
+              print((RESET) +" | ")
+              (if (quote.winning == true) print((GREEN) + limitDecimals(quote.quote,2).toString) else print((RED) + limitDecimals(quote.quote,2).toString))
+              print((RESET) + " | ") 
           }
           writeLine( row.winning )
         }
+        writeLine("======================================")(YELLOW)
         active = false
       }
     }
     true
   }
+  
+  private def limitDecimals(number: Double, length: Int) = BigDecimal(number).setScale(length, BigDecimal.RoundingMode.FLOOR).toDouble
 
 }

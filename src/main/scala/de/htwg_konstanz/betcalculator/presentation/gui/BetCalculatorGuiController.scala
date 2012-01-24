@@ -20,13 +20,24 @@ class BetCalculatorGuiController(val model: BaseModel) extends BaseController wi
   def chooseSystem(choice: Int): Unit = model.chooseSystem(choice)
   def calculateCombinationNumbers: List[Int] = model.calculateCombinationNumbers
   def setBettingAmount(wager: Double): Unit = model.setBettingAmount(wager)
-  def placeBet(choice: Int): Unit = model.placeBet(choice)
+  def placeBet(choice: Int): Unit = {
+   model.placeBet(choice)
+   publish(new BetAdded(model.bets))
+  }
   def placeWinningBets(winningBetsIds: List[Int]): Unit = model.placeWinningBets(winningBetsIds)
-  def calculateResult: Set[RowWinnings] = { model.calculateResult }
+  def calculateResult: Set[RowWinnings] = {
+    publish(new WinningsCalculated(model.calculateResult))
+    model.calculateResult
+  }
   def getGameDays: List[GameDay] = model.getGameDays
+  def clearList = { 
+    model.clearList
+    publish(new TicketChanged)
+  }
 }
 
 class GameDayChanged extends Event {}
 class GameChanged(var game: Game) extends Event {}
-class SystemChanged extends Event {}
-class NewBetAdded extends Event {}
+class WinningsCalculated(var result: Set[RowWinnings]) extends Event {}
+class BetAdded(var bets: Map[Int,Bet]) extends Event {}
+class TicketChanged extends Event {}

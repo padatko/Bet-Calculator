@@ -30,8 +30,8 @@ class BetCalculator(
     calculateOverallQuote(combinations) map {
       combination =>
         estimateRowValue(combination.combination) match {
-          case true => RowWinnings(combination.combination, 0.00)
-          case false => RowWinnings(combination.combination, limitDecimals(combination.quote * (wager / combinations.size), 2))
+          case true => RowWinnings(combination.combination, combination.quote, 0.00)
+          case false => RowWinnings(combination.combination, combination.quote, limitDecimals(combination.quote * (wager / combinations.size), 2))
         }
     }
   }
@@ -51,4 +51,4 @@ class BetCalculator(
 }
 
 final case class RowQuotes(val combination: Set[Bet], quote: Double)
-final case class RowWinnings(val combination: Set[Bet], winning: Double)
+final case class RowWinnings(val combination: Set[Bet], overalQuote: Double, winning: Double)
