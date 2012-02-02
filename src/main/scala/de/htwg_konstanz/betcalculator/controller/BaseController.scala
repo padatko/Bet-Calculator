@@ -1,7 +1,9 @@
-package de.htwg_konstanz.betcalculator.presentation
-import de.htwg_konstanz.betcalculator._
+package de.htwg_konstanz.betcalculator.controller
 
-abstract class BaseController {
+import de.htwg_konstanz.betcalculator._
+import scala.swing.Publisher
+
+abstract class BaseController extends Publisher {
   def chosenGameDay: GameDay
   def getGameDays: List[GameDay]
   def getBets: Map[Int, Bet]

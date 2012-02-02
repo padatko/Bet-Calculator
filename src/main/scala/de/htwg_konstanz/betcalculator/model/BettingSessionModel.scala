@@ -1,4 +1,5 @@
-package de.htwg_konstanz.betcalculator.presentation
+package de.htwg_konstanz.betcalculator.model
+
 import de.htwg_konstanz.betcalculator._
 
 class BettingSession extends BaseModel {
@@ -10,7 +11,9 @@ class BettingSession extends BaseModel {
   }
   def bets: Map[Int, Bet] = bets_
   def calculateCombinationNumbers: List[Int] = (2 to bets.size - 1).toList
-  def clearList: Unit = bets_ = Map[Int,Bet]()
+  def clearList(): Unit = {
+    bets_ = Map[Int, Bet]()
+  }
 
   def getGameDays: List[GameDay] = DataManager.getMatches.toList
 
@@ -57,20 +60,19 @@ class BettingSession extends BaseModel {
     bettingAmount_ = amount
   }
 
-  def placeBet(choice: Int): Unit = choice match {
-    case 1 => addBet(chosenGame.no, Bet(chosenGame.teamHome, chosenGame.homeOdds))
-    case 0 => addBet(chosenGame.no, Bet(0, chosenGame.tieOdds))
-    case 2 => addBet(chosenGame.no, Bet(chosenGame.teamAway, chosenGame.awayOdds))
+  def placeBet(choice: Int): Unit = {
+    val c = chosenGame
+    import c._
+    choice match {
+      case 1 => addBet(no, Bet(teamHome, homeOdds))
+      case 0 => addBet(no, Bet(0, tieOdds))
+      case 2 => addBet(no, Bet(teamAway, awayOdds))
+    }
   }
 
   def placeWinningBets(winningBetsIds: List[Int]): Unit = {
-    //winningBetsIds.foreach(e => bets_(e).winning = true)
-    bets.foreach( e => 
-      if(winningBetsIds.contains(e._1)) {
-        e._2.winning = true
-      } else {
-        e._2.winning = false
-      })
+    for ((id, bet) <- bets)
+      bet.winning = winningBetsIds.contains(id)
   }
 
   def calculateResult: Set[RowWinnings] = {

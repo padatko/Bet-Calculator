@@ -16,36 +16,18 @@ class BetCalculator(
       RowQuotes(combination, limitDecimals(generateQuotesList(combination).product, 2))
   }
 
-  private def generateQuotesList(betRow: Set[Bet]) = {
-    betRow.toList.flatMap { e =>
-      try {
-        List(e.quote)
-      } catch {
-        case _ => Nil
-      }
-    }
-  }
+  private def generateQuotesList(betRow: Set[Bet]) = betRow.toList map { _.quote }
 
   def calculateOverallWinnings(combinations: Set[Set[Bet]]): Set[RowWinnings] = {
-    calculateOverallQuote(combinations) map {
-      combination =>
-        estimateRowValue(combination.combination) match {
-          case true => RowWinnings(combination.combination, combination.quote, 0.00)
-          case false => RowWinnings(combination.combination, combination.quote, limitDecimals(combination.quote * (wager / combinations.size), 2))
-        }
+    calculateOverallQuote(combinations) map { c =>
+      if (estimateRowValue(c.combination))
+        RowWinnings(c.combination, c.quote, 0.00)
+      else
+        RowWinnings(c.combination, c.quote, limitDecimals(c.quote * (wager / combinations.size), 2))
     }
   }
 
-  private def estimateRowValue(row: Set[Bet]): Boolean = {
-    val values = row.toList.flatMap { e =>
-      try {
-        List(e.winning)
-      } catch {
-        case _ => Nil
-      }
-    }
-    values.contains(false)
-  }
+  private def estimateRowValue(row: Set[Bet]) = row.map { _.winning }.contains(false)
   private def limitDecimals(number: Double, length: Int) = BigDecimal(number).setScale(length, BigDecimal.RoundingMode.FLOOR).toDouble
 
 }

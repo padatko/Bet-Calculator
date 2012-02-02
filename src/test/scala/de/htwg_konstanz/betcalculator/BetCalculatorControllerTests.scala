@@ -1,6 +1,7 @@
 package de.htwg_konstanz.betcalculator
 
-import de.htwg_konstanz.betcalculator.presentation._
+import de.htwg_konstanz.betcalculator.model._
+import de.htwg_konstanz.betcalculator.controller._
 
 class BetCalculatorControllerTests extends UnitTestConfiguration {
 

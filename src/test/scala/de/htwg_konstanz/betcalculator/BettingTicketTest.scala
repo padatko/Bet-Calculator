@@ -1,5 +1,5 @@
 package de.htwg_konstanz.betcalculator
-import de.htwg_konstanz.betcalculator.presentation.BettingSession
+import de.htwg_konstanz.betcalculator.model._
 
 class BettingSessionTest extends UnitTestConfiguration {
 
@@ -7,17 +7,6 @@ class BettingSessionTest extends UnitTestConfiguration {
 
   override def beforeEach() {
     bettingSession = new BettingSession
-  }
-
-  test("Given 4 bets, calculateCombinationNumbers should return 2 possible combinations") {
-//        bettingSession.addBet(new Bet(1, 2.0))
-//        bettingSession.addBet(new Bet(2, 4.0))
-//        bettingSession.addBet(new Bet(3, 6.0))
-//        bettingSession.addBet(new Bet(4, 5.0))
-//        val expectedNumbers = List(2, 3)
-//        val actualNumbers = bettingSession.calculateCombinationNumbers
-//    
-//        actualNumbers should be(expectedNumbers)
   }
 
   test("Given 4 bets, clearList should remove all elements and calculateCombinationsNumbers should return empty list") {
@@ -35,16 +24,6 @@ class BettingSessionTest extends UnitTestConfiguration {
     actualGameDay should be(expectedGameDay)
   }
 
-  test("Choose correct gameday") {
-    bettingSession.chooseGameDay(1)
-    val actualGameDay = bettingSession.chosenGameDay
-    val expectedGameDay = GameDay(1,
-      List(Game(1, 1, 2, 1.1, 1.3, 1.7),
-        Game(2, 3, 4, 1.5, 1.9, 1.1)))
-
-    actualGameDay should be(expectedGameDay)
-  }
-
   test("No game should be chosen") {
     val actualGame = bettingSession.chosenGame
     val expectedGame = null
@@ -53,32 +32,32 @@ class BettingSessionTest extends UnitTestConfiguration {
   }
 
   test("Choose correct game") {
-    bettingSession.chooseGameDay(1)
+    bettingSession.chooseGameDay(19)
     bettingSession.chooseGame(1)
     val actualGame = bettingSession.chosenGame
-    val expectedGame = Game(1, 1, 2, 1.1, 1.3, 1.7)
+    val expectedGame = Game(1, 7, 12, 2.05, 3.35, 3.55)
 
     actualGame should be(expectedGame)
   }
 
-  test("Place bet on home team in game 1 of gameday 1 and verify bet") {
-    bettingSession.chooseGameDay(1)
+  test("Place bet on home team in game 1 of gameday 19 and verify bet") {
+    bettingSession.chooseGameDay(19)
     bettingSession.chooseGame(1)
     bettingSession.placeBet(1)
     val actualBets = bettingSession.bets
-    val expectedBets = Map(1 -> Bet(1, 1.1))
+    val expectedBets = Map(1 -> Bet(7, 2.05))
 
     actualBets should be(expectedBets)
   }
 
-  test("Place bet on away team in game 1 and on tie in game 2 of gameday 1 and verify bet") {
-    bettingSession.chooseGameDay(1)
+  test("Place bet on away team in game 1 and on tie in game 2 of gameday 19 and verify bet") {
+    bettingSession.chooseGameDay(19)
     bettingSession.chooseGame(1)
     bettingSession.placeBet(2)
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
     val actualBets = bettingSession.bets
-    val expectedBets = Map(1 -> Bet(2, 1.7), 2 -> Bet(0, 1.9))
+    val expectedBets = Map(1 -> Bet(12, 3.55), 2 -> Bet(0, 4.75))
 
     actualBets should be(expectedBets)
   }
@@ -92,14 +71,14 @@ class BettingSessionTest extends UnitTestConfiguration {
   }
 
   test("Choose winning bets and verify result") {
-    bettingSession.chooseGameDay(1)
+    bettingSession.chooseGameDay(19)
     bettingSession.chooseGame(1)
     bettingSession.placeBet(2)
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
     bettingSession.placeWinningBets(List(2))
     val actualWinningBets = bettingSession.bets
-    val expectedWinningBets = Map(1 -> Bet(2, 1.7), 2 -> Bet(0, 1.9, true))
+    val expectedWinningBets = Map(1 -> Bet(12, 3.55), 2 -> Bet(0, 4.75, true))
 
     actualWinningBets should be(expectedWinningBets)
   }
@@ -112,21 +91,5 @@ class BettingSessionTest extends UnitTestConfiguration {
     actualBettingAmount should be(expectedBettingAmount)
   }
 
-  test("Calculate combinations with 3 games, 2 right choices and a 2 of 3 System") {
-    bettingSession.chooseGameDay(1)
-    bettingSession.chooseGame(1)
-    bettingSession.placeBet(2)
-    bettingSession.chooseGame(2)
-    bettingSession.placeBet(0)
-    bettingSession.chooseGame(1)
-    bettingSession.placeBet(0)
-    bettingSession.chooseSystem(2)
-    bettingSession.setBettingAmount(10.00)
-    //    val combinations = BetCalculator.createCombinations(Set(1.7,1.9,1.3),2)
-    //    val expectedCalculation = BetCalculator.calculateOverallQuote(combinations)
-    //val actualCalculation = bettingSession.calculateResult
-
-//    actualCalculation should be(expectedCalculation)
-  }
 
 }

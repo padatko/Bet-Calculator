@@ -1,10 +1,11 @@
-package de.htwg_konstanz.betcalculator.presentation
+package de.htwg_konstanz.betcalculator.model
+
 import de.htwg_konstanz.betcalculator._
 
 abstract class BaseModel {
   def chosenGameDay: GameDay
-  def getGameDays: List[GameDay] 
-  def bets: Map[Int,Bet]
+  def getGameDays: List[GameDay]
+  def bets: Map[Int, Bet]
   def chosenGame: Game
   def bettingAmount: Double
   def chosenSystem: Int
@@ -16,5 +17,5 @@ abstract class BaseModel {
   def placeBet(choice: Int): Unit
   def placeWinningBets(winningBetsIds: List[Int]): Unit
   def calculateResult: Set[RowWinnings]
-  def clearList: Unit
+  def clearList(): Unit
 }

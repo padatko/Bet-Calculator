@@ -1,6 +1,7 @@
-package de.htwg_konstanz.betcalculator.presentation.tui
+package de.htwg_konstanz.betcalculator.view.tui
 
-import de.htwg_konstanz.betcalculator.presentation._
+import de.htwg_konstanz.betcalculator.controller._
+import de.htwg_konstanz.betcalculator.model._
 
 object TUI extends App {
   val model = new BettingSession

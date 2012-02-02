@@ -1,6 +1,6 @@
-package de.htwg_konstanz.betcalculator.presentation.tui
+package de.htwg_konstanz.betcalculator.view.tui
 
-import de.htwg_konstanz.betcalculator.presentation._
+import de.htwg_konstanz.betcalculator.controller._
 import Console._
 
 class BetCalculatorView(var controller: BaseController) {

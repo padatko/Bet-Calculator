@@ -1,0 +1,47 @@
+<lift:surround with="default" at="content">
+
+
+	<div id="bc_dashboard">
+		<div class="lift:AjaxForm.show">
+			<div id="toolbar" class="ui-widget-header ui-corner-all">
+				Gamedays:
+				<select:gamedays></select:gamedays>
+				Games:
+				<select:games></select:games>
+				Bets:
+				<select:bets></select:bets>
+				<select:addbet></select:addbet>
+			</div>
+			<div id="bc_ticket">
+				<div class="bc_panel">
+					<div class="panel_header ui-widget-header ui-corner-all">Your
+						Betting Ticket</div>
+						<div id="bets">
+						<div class="bet_entry">You did not add a bet!</div>
+						</div>
+						<select:wager></select:wager>
+						<select:system></select:system>
+						<select:clear></select:clear>
+						<select:calculateResult></select:calculateResult>
+				</div>
+			</div>
+			<div id="bc_result">
+				<div class="bc_panel">
+					<div class="panel_header ui-widget-header ui-corner-all">Your
+						Result</div>
+						<div id="result">
+						<table id="result_table">
+						</table>
+						<div id="total_winning"></div>
+						</div>
+				</div>
+			</div>
+			<p>
+				
+			</p>
+		</div>
+		<div id="messages"></div>
+	</div>
+	</div>
+
+</lift:surround>

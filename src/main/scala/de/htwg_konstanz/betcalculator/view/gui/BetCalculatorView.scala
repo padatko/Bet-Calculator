@@ -1,24 +1,22 @@
-package de.htwg_konstanz.betcalculator.presentation.gui
+package de.htwg_konstanz.betcalculator.view.gui
 
 import scala.swing._
 import javax.swing.JFrame
 import swing.ListView._
 import BorderPanel.Position._
 import event._
-import de.htwg_konstanz.betcalculator.presentation._
+import de.htwg_konstanz.betcalculator.controller._
 import de.htwg_konstanz.betcalculator._
 
-class BetCalculatorView(var controller: BetCalculatorGuiController) extends Frame with NativeLookAndFeel {
+class BetCalculatorView(var controller: BaseController) extends Frame with NativeLookAndFeel {
 
   listenTo(gamedaysComboBox.selection, controller, matchesListView.selection, addBetButton, calculateResultButton, clearTicketButton)
 
   case class PlaceBet(text: String, choice: Int)
   case class SystemEntry(text: String, system: Int)
   case class BettingEntry(gameId: Int, teamName: String, quote: Double, selectBox: CheckBox)
-  case class WinningEntry(combination: Set[Bet], quote: Double)
 
   var bettingEntries = List[BettingEntry]()
-  var winningEntries = List[WinningEntry]()
   var placeBet = List(PlaceBet("---", 0))
   var systemEntry = List(SystemEntry("---", 0))
   var placeBetComboBox = new ComboBox(placeBet) {
@@ -131,7 +129,7 @@ class BetCalculatorView(var controller: BetCalculatorGuiController) extends Fram
 
   def resultArea = new BorderPanel {
     border = Swing.CompoundBorder(Swing.EmptyBorder(5, 5, 5, 5), Swing.EtchedBorder)
-    add(resultTable, Center)
+    add(new ScrollPane(resultTable), Center)
   }
 
   lazy val resultTable = new BoxPanel(Orientation.Vertical) {
@@ -141,7 +139,8 @@ class BetCalculatorView(var controller: BetCalculatorGuiController) extends Fram
     case WindowClosing(e) => System.exit(0)
     case SelectionChanged(`gamedaysComboBox`) => controller.chooseGameDay(gamedaysComboBox.selection.item.no)
     case SelectionChanged(`matchesListView`) => {
-      if (!matchesListView.selection.items.isEmpty) controller.chooseGame(matchesListView.selection.items.head.no)
+      if (!matchesListView.selection.items.isEmpty)
+        controller.chooseGame(matchesListView.selection.items.head.no)
     }
     case e: GameDayChanged => updateGamesListView
     case e: GameChanged => updateGameInfo(e.game)
@@ -149,7 +148,6 @@ class BetCalculatorView(var controller: BetCalculatorGuiController) extends Fram
     case ButtonClicked(`addBetButton`) => controller.placeBet(placeBetComboBox.selection.item.choice)
     case ButtonClicked(`calculateResultButton`) => calculateResult
     case ButtonClicked(`clearTicketButton`) => controller.clearList
-    case e: WinningsCalculated => publishWinnings(e.result)
     case e: TicketChanged => refreshTicket
   }
 
@@ -177,7 +175,7 @@ class BetCalculatorView(var controller: BetCalculatorGuiController) extends Fram
         controller.placeWinningBets(selectedIds)
         controller.setBettingAmount(inputWager)
         controller.chooseSystem(setSystemComboBox.selection.item.system)
-        controller.calculateResult
+        publishWinnings(controller.calculateResult)
       }
     } catch {
       case e => Dialog.showMessage(null, "Your input is not a valid number. Please correct your input")
@@ -266,13 +264,13 @@ class BetCalculatorView(var controller: BetCalculatorGuiController) extends Fram
         }
 
       })
+      resultTable.contents += new FlowPanel {
+        contents += new Label("Your overall winning:")
+        val winning = winnings.toList map { _.winning }
+        contents += new Label((winning.sum).toString() + " Euro")
+      }
     }
     resultTable.revalidate
-  }
-
-  def generateWinnings(winnings: Set[RowWinnings]): List[WinningEntry] = {
-    (for (winning <- winnings)
-      yield new WinningEntry(winning.combination, winning.overalQuote)).toList
   }
 
   def updateGamesListView = {
