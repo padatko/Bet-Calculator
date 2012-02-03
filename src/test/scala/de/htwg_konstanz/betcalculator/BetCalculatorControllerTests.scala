@@ -5,8 +5,8 @@ import de.htwg_konstanz.betcalculator.controller._
 
 class BetCalculatorControllerTests extends UnitTestConfiguration {
 
-  private var model: BettingSession = _
-  private var controller: BetCalculatorController = _
+  private var model: BaseModel = _
+  private var controller: BaseController = _
 
   override def beforeEach() {
     model = new BettingSession

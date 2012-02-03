@@ -14,8 +14,8 @@ libraryDependencies ++= Seq(
 	"org.scalatest" %% "scalatest" % "latest.release" % "test",
 	"org.scala-lang" % "scala-swing" % "2.9.1",
   	"net.liftweb" %% "lift-webkit" % "latest.release",
-  	"org.eclipse.jetty" % "jetty-webapp" % "latest.release" % "container, test", 
-  	"ch.qos.logback" % "logback-classic" % "latest.release"
+  	"org.eclipse.jetty" % "jetty-webapp" % "latest.release" % "container, test" 
+  	//"ch.qos.logback" % "logback-classic" % "latest.release"
 )
 
 scalacOptions ++= Seq(

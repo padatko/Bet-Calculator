@@ -1,0 +1,34 @@
+================================= BetCalculator =================================
+Authors: Albert Schaaf (281606)
+		 Patrick Datko (281303)
+=================================================================================
+Setup
+---------------------------------------------------------------------------------
+Requirements
+
+Java 6 (JDK1.6)
+SBT 0.11+
+
+===!===!===!===!===!===!===!=== ATTENTION ===!===!===!===!===!===!===!===!===!===!=
+If an error occured during the compilation of the scala swing gui, it is possible
+that you are not using a JDK1.6 or did not select this version.
+Because of the changes in some classes of the native Swing Framework, some required
+functions are disabled in JDK 1.7, which will be used by "peer"-method of scala
+to get the native swing access.
+===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===!===
+
+Build
+---------------------------------------------------------------------------------
+In folder "Bet-Calculator"
+$ sbt
+
+$ compile -> Compile Source files
+$ test -> Run all tests
+$ run -> Compile and select UI (TUI/GUI/LIFT)
+
+Lift Appendix:
+---------------------------------------------------------------------------------
+Before running lift, you have to start jetty. In sbt you can use following commands:
+$ container:start -> Start jetty
+$ container:stop -> Stops jetty
+		

@@ -23,9 +23,8 @@ class BetCalculatorView(var controller: BaseController) {
   }
 
   private def initControlls = {
-    while (true) {
-      showMenu
-    }
+    while (true)
+      showMenu()
   }
 
   private def showGameDays = {
@@ -34,7 +33,7 @@ class BetCalculatorView(var controller: BaseController) {
     waitForInput
   }
 
-  private def showMenu = {
+  private def showMenu() {
     writeList(menu)
     waitForInput
   }
@@ -47,7 +46,7 @@ class BetCalculatorView(var controller: BaseController) {
       "[E]: Exit")
   }
 
-  private def waitForInput = readLine.toLowerCase() match {
+  private def waitForInput = readLine.toLowerCase match {
     case "a" => showBettingMenu
     case "c" => showGamedayMenu
     case "s" => showBettingTicketMenu
@@ -55,32 +54,18 @@ class BetCalculatorView(var controller: BaseController) {
     case unknownInput => writeLine("Your choise is not supported. Please check your input.")(RED)
   }
 
-  private def waitForInputWinning: Boolean = readLine.toLowerCase() match {
+  private def waitForInputWinning: Boolean = waitForInput(checkForValidWinning)
+  private def waitForInputGameDay: Boolean = waitForInput(checkForValidGameDay)
+  private def waitForInputGame: Boolean = waitForInput(checkForValidGame)
+  private def waitForInputWager: Boolean = waitForInput(checkForValidWager)
+  private def waitForInputSystem: Boolean = waitForInput(checkForValidSystem)
+
+  private def waitForInput(closure: String => Boolean) = readLine.toLowerCase match {
     case "e" | "exit" => false
-    case x => checkForValidWinning(x)
+    case x => closure(x)
   }
 
-  private def waitForInputGameDay: Boolean = readLine.toLowerCase() match {
-    case "e" | "exit" => false
-    case x => checkForValidGameDay(x)
-  }
-
-  private def waitForInputGame: Boolean = readLine.toLowerCase() match {
-    case "e" | "exit" => false
-    case x => checkForValidGame(x)
-  }
-
-  private def waitForInputWager: Boolean = readLine.toLowerCase() match {
-    case "e" | "exit" => false
-    case x => checkForValidWager(x)
-  }
-
-  private def waitForInputSystem: Boolean = readLine.toLowerCase() match {
-    case "e" | "exit" => false
-    case x => checkForValidSystem(x)
-  }
-
-  private def waitForInputBettingTicket: Boolean = readLine.toLowerCase() match {
+  private def waitForInputBettingTicket: Boolean = readLine.toLowerCase match {
     case "w" => showWagerMenu
     case "s" => showSystemMenu
     case "p" => showPlaceWinningsMenu
@@ -301,31 +286,32 @@ class BetCalculatorView(var controller: BaseController) {
   }
 
   private def showCalculationMenu = {
+    import de.htwg_konstanz.betcalculator.Utils
     var active = true;
     while (active) {
       if (controller.getWager == 0.0 || controller.chosenSystem == 0) {
         writeLine("To calculate a result, you have to place a wager and choose a system")(RED)
         active = false
       } else {
-        writeLine("======================================")(YELLOW)
-        writeLine("============== YOUR RESULT ===========")(YELLOW)
-        writeLine("======================================")(YELLOW)
-        controller.calculateResult.foreach { row =>
+        writeLine("="*40)(YELLOW)
+        writeLine("=============== YOUR RESULT ============")(YELLOW)
+        writeLine("="*40)(YELLOW)
+        val results = controller.calculateResult
+        results.foreach { row =>
           row.combination.foreach {
             quote =>
-              print((RESET) +" | ")
-              (if (quote.winning == true) print((GREEN) + limitDecimals(quote.quote,2).toString) else print((RED) + limitDecimals(quote.quote,2).toString))
-              print((RESET) + " | ") 
+              print((RESET) + " | ")
+              (if (quote.winning == true) print((GREEN) + Utils.limitDecimals(quote.quote, 2).toString) else print((RED) + Utils.limitDecimals(quote.quote, 2).toString))
+              print((RESET) + " | ")
           }
-          writeLine( row.winning )
+          writeLine(row.winning)
         }
-        writeLine("======================================")(YELLOW)
+        writeLine("========= YOUR TOTAL WINNING ===========")(YELLOW)
+        writeLine(Utils.limitDecimals(results.map { _.winning }.sum, 2))(YELLOW)
+        writeLine("="*40)(YELLOW)
         active = false
       }
     }
     true
   }
-  
-  private def limitDecimals(number: Double, length: Int) = BigDecimal(number).setScale(length, BigDecimal.RoundingMode.FLOOR).toDouble
-
 }

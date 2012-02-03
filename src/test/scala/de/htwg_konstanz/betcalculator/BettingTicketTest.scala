@@ -11,7 +11,7 @@ class BettingSessionTest extends UnitTestConfiguration {
 
   test("Given 4 bets, clearList should remove all elements and calculateCombinationsNumbers should return empty list") {
     val expectedNumbers = List[Int]()
-    bettingSession.clearList
+    bettingSession.clearList()
     val actualNumbers = bettingSession.calculateCombinationNumbers
 
     actualNumbers should be(expectedNumbers)
@@ -19,16 +19,12 @@ class BettingSessionTest extends UnitTestConfiguration {
 
   test("No gameday should be chosen") {
     val actualGameDay = bettingSession.chosenGameDay
-    val expectedGameDay = null
-
-    actualGameDay should be(expectedGameDay)
+    actualGameDay should be(null)
   }
 
   test("No game should be chosen") {
     val actualGame = bettingSession.chosenGame
-    val expectedGame = null
-
-    actualGame should be(expectedGame)
+    actualGame should be(null)
   }
 
   test("Choose correct game") {
@@ -57,7 +53,9 @@ class BettingSessionTest extends UnitTestConfiguration {
     bettingSession.chooseGame(2)
     bettingSession.placeBet(0)
     val actualBets = bettingSession.bets
-    val expectedBets = Map(1 -> Bet(12, 3.55), 2 -> Bet(0, 4.75))
+    val expectedBets = Map(
+      1 -> Bet(12, 3.55),
+      2 -> Bet(0, 4.75))
 
     actualBets should be(expectedBets)
   }
@@ -90,6 +88,5 @@ class BettingSessionTest extends UnitTestConfiguration {
 
     actualBettingAmount should be(expectedBettingAmount)
   }
-
 
 }

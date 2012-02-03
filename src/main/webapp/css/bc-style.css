@@ -28,12 +28,12 @@ body {
 
 #header {
 	height: 10%;
-	text-align:center;
+	text-align: center;
 }
 
-#header > h1 {
-font-size:2.5em;
-font-family: Impact, Charcoal, sans-serif;
+#header>h1 {
+	font-size: 2.5em;
+	font-family: Impact, Charcoal, sans-serif;
 }
 
 #container {
@@ -49,11 +49,12 @@ font-family: Impact, Charcoal, sans-serif;
 }
 
 #right_column {
-	float: left; width : 15%;
+	float: left;
+	width: 15%;
 }
 
 .panel_header {
-	width:100%
+	width: 100%
 }
 
 .bet_entry {
@@ -67,17 +68,18 @@ font-family: Impact, Charcoal, sans-serif;
 }
 
 #seperator {
-	float:left;
-	width:10%;
+	float: left;
+	width: 10%;
 }
+
 #bc_dashboard {
 	float: left;
 	width: 70%
 }
 
-#bc_ticket, #bc_result {
-	float:left;
-	width:48%;
+#bc_ticket,#bc_result {
+	float: left;
+	width: 48%;
 	padding: 10px 1%;
 }
 
@@ -113,13 +115,25 @@ font-family: Impact, Charcoal, sans-serif;
 	color: red;
 }
 
-
 table#result_table {
-	width:100%;
+	width: 100%;
 }
 
 .result_winning {
 	font-weight: bold;
+}
+
+#total_winning {
+	font-size: 1.2em;
+	padding: 20px 0px;
+}
+
+#txt_wager {
+	width: 50px;
+}
+
+#result_area>img {
+	padding: 20px 0px;
 }
 
 td.wrong,td.right {
@@ -127,11 +141,11 @@ td.wrong,td.right {
 }
 
 td.wrong {
-	background-color:red;
+	background-color: #f50800;
 }
 
 td.right {
-	background-color:green;
+	background-color: #00f518;
 }
 
 .firstTag {
@@ -144,8 +158,8 @@ td.right {
 
 #copyright {
 	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-	font-size:0.9em;
-	position:absolute;
+	font-size: 0.9em;
+	position: absolute;
 	top: 2px;
 	right: 5px;
 }

@@ -1,47 +1,40 @@
 <lift:surround with="default" at="content">
-
-
 	<div id="bc_dashboard">
-		<div class="lift:AjaxForm.show">
+		<div class="lift:BCDashboard.show">
 			<div id="toolbar" class="ui-widget-header ui-corner-all">
 				Gamedays:
-				<select:gamedays></select:gamedays>
+				<bc:gamedays></bc:gamedays>
 				Games:
-				<select:games></select:games>
+				<bc:games></bc:games>
 				Bets:
-				<select:bets></select:bets>
-				<select:addbet></select:addbet>
+				<bc:bets></bc:bets>
+				<bc:addbet></bc:addbet>
 			</div>
 			<div id="bc_ticket">
 				<div class="bc_panel">
 					<div class="panel_header ui-widget-header ui-corner-all">Your
 						Betting Ticket</div>
-						<div id="bets">
+					<div id="bets">
 						<div class="bet_entry">You did not add a bet!</div>
-						</div>
-						<select:wager></select:wager>
-						<select:system></select:system>
-						<select:clear></select:clear>
-						<select:calculateResult></select:calculateResult>
+					</div>
+					Wager: <bc:wager></bc:wager>
+					System: <bc:system></bc:system>
+					<bc:clear></bc:clear>
+					<bc:calculateResult></bc:calculateResult>
 				</div>
 			</div>
 			<div id="bc_result">
 				<div class="bc_panel">
 					<div class="panel_header ui-widget-header ui-corner-all">Your
 						Result</div>
-						<div id="result">
-						<table id="result_table">
-						</table>
+					<div id="result">
+					<div id="result_area"><img src="/images/bc_result.png"/></div>
 						<div id="total_winning"></div>
-						</div>
+					</div>
 				</div>
 			</div>
-			<p>
-				
-			</p>
+			<p></p>
 		</div>
-		<div id="messages"></div>
 	</div>
 	</div>
-
 </lift:surround>

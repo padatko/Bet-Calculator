@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+	// Workaround because Lift doesnt support any DOM manipulation
 	$(":button").button();
 	$("#bc_dashboard").tabs();
 	$(".bc_panel").tabs();
@@ -20,15 +21,11 @@ $(document).ready(function() {
 		$('#txt_wager').attr('disabled','disabled');
 		$('#select_system').attr('disabled','disabled');
 	});
-//	$("#select_gamedays").change(function() {
-//		$('#select_games').removeAttr('disabled');
-//	})
-//	$("#select_games").change(function() {
-//		$('#select_bets').removeAttr('disabled');
-//	})
-//	$("#select_bets").change(function() {
-//		$("#bt_addbet").removeAttr("disabled");
-//		$("#bt_addbet").button("option", "disabled", "false");
-//	})
+	
+	$("#bt_help").button( "option", "icons", {primary:'ui-icon-help'} );
+	$("#bt_help").bind("click", function() {
+		window.open("http://de.wikipedia.org/wiki/Sportwette#Systemwette","BetCalculator>Help", "width=800,height=650,menubar=1,scrollbars=0,status=1,toolbar=1,resizable=0");
+        return false;
+	});
 
 });

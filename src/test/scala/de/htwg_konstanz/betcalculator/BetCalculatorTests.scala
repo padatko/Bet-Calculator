@@ -85,8 +85,8 @@ class BetCalculatorTests extends UnitTestConfiguration {
     val betCalculator = new BetCalculator(threeBets, 2, 10.00)
     val combinations = betCalculator.createCombinations
     val actualSetOfOverallWinnings = betCalculator.calculateOverallWinnings(combinations)
-    val expectedSetOfOverallWinnings = Set(RowWinnings(Set(betA, betB), 1.21, 0.00), RowWinnings(Set(betB, betC), 1.43, 0.00) , RowWinnings(Set(betA, betC), 1.43, 4.76))
-    
+    val expectedSetOfOverallWinnings = Set(RowWinnings(Set(betA, betB), 1.21, 0.00), RowWinnings(Set(betB, betC), 1.43, 0.00), RowWinnings(Set(betA, betC), 1.43, 4.76))
+
     actualSetOfOverallWinnings should be(expectedSetOfOverallWinnings)
   }
 

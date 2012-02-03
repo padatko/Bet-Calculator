@@ -7,6 +7,7 @@ import BorderPanel.Position._
 import event._
 import de.htwg_konstanz.betcalculator.controller._
 import de.htwg_konstanz.betcalculator._
+import scala.swing.Swing._
 
 class BetCalculatorView(var controller: BaseController) extends Frame with NativeLookAndFeel {
 
@@ -20,44 +21,44 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
   var placeBet = List(PlaceBet("---", 0))
   var systemEntry = List(SystemEntry("---", 0))
   var placeBetComboBox = new ComboBox(placeBet) {
-    selection.index_=(0)
+    selection.index = 0
     renderer = Renderer(_.text)
-    enabled_=(false)
+    enabled = false
   }
   var setSystemComboBox = new ComboBox(systemEntry) {
-    selection.index_=(0)
+    selection.index = 0
     renderer = Renderer(_.text)
-    enabled_=(false)
-    minimumSize_=(new Dimension(30, 300))
+    enabled = false
+    minimumSize = new Dimension(30, 300)
   }
 
   contents = new BoxPanel(Orientation.Vertical) {
-    border = Swing.EmptyBorder(5, 5, 5, 5)
+    border = EmptyBorder(5, 5, 5, 5)
     contents += inputArea
     contents += outputArea
   }
 
   def inputArea = new GridPanel(1, 2) {
-    border = Swing.EmptyBorder(5, 5, 5, 5)
+    border = EmptyBorder(5, 5, 5, 5)
     contents += matchesArea
     contents += bettingArea
   }
 
   def matchesArea = new BorderPanel {
-    border = Swing.EmptyBorder(5, 5, 5, 5)
+    border = EmptyBorder(5, 5, 5, 5)
     add(gameDayArea, North)
     add(matchesListView, Center)
     add(gameArea, South)
   }
 
-  lazy val test = List[Game]()
-  lazy val matchesListView = new ListView(test) {
-    selection.intervalMode_=(IntervalMode.SingleInterval)
-    border_=(Swing.EtchedBorder)
+  lazy val games = List[Game]()
+  lazy val matchesListView = new ListView(games) {
+    selection.intervalMode = IntervalMode.SingleInterval
+    border = EtchedBorder
   }
 
   def bettingArea = new BorderPanel {
-    border = Swing.EmptyBorder(5, 5, 5, 5)
+    border = EmptyBorder(5, 5, 5, 5)
     add(new FlowPanel() {
       contents += new Label("Your betting ticket")
     }, North)
@@ -67,20 +68,20 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
 
   lazy val wagerTextField = new TextField {
     text = (0.0).toString
-    maximumSize_=(new Dimension(30, 350))
-    enabled_=(false)
+    maximumSize = new Dimension(30, 350)
+    enabled = false
   }
 
   def bettingControls = new BorderPanel {
-    border = Swing.EtchedBorder
+    border = EtchedBorder
     add(new BoxPanel(Orientation.Horizontal) {
-      border = Swing.EmptyBorder(5, 5, 5, 5)
+      border = EmptyBorder(5, 5, 5, 5)
       contents += setSystemComboBox
       contents += calculateResultButton
       contents += clearTicketButton
     }, Center)
     layout(new BoxPanel(Orientation.Horizontal) {
-      border = Swing.EmptyBorder(5, 5, 5, 5)
+      border = EmptyBorder(5, 5, 5, 5)
       contents += new Label("Wager:")
       contents += wagerTextField
     }) = North
@@ -88,12 +89,12 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
   }
 
   lazy val bettingTicketArea = new BoxPanel(Orientation.Vertical) {
-    border = Swing.EtchedBorder
+    border = EtchedBorder
   }
 
   lazy val gamedays = controller.getGameDays
   lazy val gamedaysComboBox = new ComboBox(gamedays) {
-    selection.index_=(0)
+    selection.index = 0
     renderer = Renderer(_.no + ". Spieltag")
   }
 
@@ -103,10 +104,10 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
   }
 
   def gameArea = new BorderPanel {
-    border = Swing.EtchedBorder
+    border = EtchedBorder
     add(gameInfoArea, Center)
     layout(new BoxPanel(Orientation.Horizontal) {
-      border = Swing.EmptyBorder(5, 5, 5, 5)
+      border = EmptyBorder(5, 5, 5, 5)
       contents += new Label("Choosen game:")
       contents += gameLabel
     }) = North
@@ -118,7 +119,7 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
   lazy val clearTicketButton = new Button("Clear Ticket")
 
   def gameInfoArea = new BoxPanel(Orientation.Horizontal) {
-    border = Swing.EmptyBorder(5, 5, 5, 5)
+    border = EmptyBorder(5, 5, 5, 5)
     contents += placeBetComboBox
     contents += addBetButton
   }
@@ -128,7 +129,7 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
   }
 
   def resultArea = new BorderPanel {
-    border = Swing.CompoundBorder(Swing.EmptyBorder(5, 5, 5, 5), Swing.EtchedBorder)
+    border = CompoundBorder(EmptyBorder(5, 5, 5, 5), EtchedBorder)
     add(new ScrollPane(resultTable), Center)
   }
 
@@ -158,39 +159,39 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
     resultTable.contents.clear
     resultTable.repaint
     resultTable.revalidate
-    addBetButton.enabled_=(false)
-    setSystemComboBox.enabled_=(false)
+    addBetButton.enabled = false
+    setSystemComboBox.enabled = false
   }
 
   def calculateResult = {
-    val selectedEntries = bettingEntries.filter { e => e.selectBox.selected == true }
-    val selectedIds = for (selectedEntry <- selectedEntries)
-      yield selectedEntry.gameId
-    var inputWager = 0.0
-    try {
-      inputWager = wagerTextField.text.toDouble
-      if (inputWager == 0) {
-        Dialog.showMessage(null, "Please use a wager greater than 0.")
-      } else {
-        controller.placeWinningBets(selectedIds)
-        controller.setBettingAmount(inputWager)
-        controller.chooseSystem(setSystemComboBox.selection.item.system)
-        publishWinnings(controller.calculateResult)
-      }
-    } catch {
+    try tryCalculateResult(bettingEntries.collect {
+      case BettingEntry(id, _, _, box) if box.selected == true => id
+    })
+    catch {
       case e => Dialog.showMessage(null, "Your input is not a valid number. Please correct your input")
     }
   }
 
-  def generateEntries(bets: Map[Int, Bet]): List[BettingEntry] = {
-    (for (bet <- bets)
-      yield new BettingEntry(bet._1, bet._2.teamName, bet._2.quote, new CheckBox())).toList
+  def tryCalculateResult(selectedIds: List[Int]) {
+    val inputWager = wagerTextField.text.toDouble
+    if (inputWager == 0)
+      Dialog.showMessage(null, "Please use a wager greater than 0.")
+    else {
+      controller.placeWinningBets(selectedIds)
+      controller.setBettingAmount(inputWager)
+      controller.chooseSystem(setSystemComboBox.selection.item.system)
+      publishResults(controller.calculateResult)
+    }
+  }
+
+  def generateEntries(bets: Map[Int, Bet]): List[BettingEntry] = bets.toList.map {
+    case (id, bet @ Bet(_, quote, _)) => BettingEntry(id, bet.teamName, quote, new CheckBox)
   }
 
   def updateGameInfo(game: Game) = {
-    gameLabel.text_=(controller.chosenGame.toString)
-    addBetButton.enabled_=(true)
-    placeBetComboBox.enabled_=(true)
+    gameLabel.text = controller.chosenGame.toString
+    addBetButton.enabled = true
+    placeBetComboBox.enabled = true
     lazy val placeBets = List(
       PlaceBet(game.homeTeamName + ": (" + game.homeOdds + ")", 1),
       PlaceBet("X: (" + game.tieOdds + ")", 0),
@@ -209,65 +210,67 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
 
     bettingTicketArea.revalidate
     if (bets.size >= 3) {
-      calculateResultButton.enabled_=(true)
-      setSystemComboBox.enabled_=(true)
-      wagerTextField.enabled_=(true)
+      calculateResultButton.enabled = true
+      setSystemComboBox.enabled = true
+      wagerTextField.enabled = true
       var combinations = for (combinationNumber <- controller.calculateCombinationNumbers)
-        yield new SystemEntry("System: " + combinationNumber + " of " + bets.size, combinationNumber)
+        yield SystemEntry("System: " + combinationNumber + " of " + bets.size, combinationNumber)
       setSystemComboBox.peer.setModel(ComboBox.newConstantModel(combinations))
     }
   }
 
-  def publishWinnings(winnings: Set[RowWinnings]) = {
+  def publishResults(results: Set[RowWinnings]) = {
+    import java.awt.Color._
+    import java.awt.Font
     resultTable.contents.clear
     resultTable.repaint
-    resultTable.contents += new GridPanel(winnings.size + 1, winnings.head.combination.size + 2) {
-      (1 to winnings.head.combination.size).toList.foreach(entry => {
-        contents += new Label(entry + ". Quote") { border = Swing.EtchedBorder }
+    resultTable.contents += new GridPanel(results.size + 1, results.head.combination.size + 2) {
+      (1 to results.head.combination.size).toList.foreach(entry => {
+        contents += new Label(entry + ". Quote") { border = EtchedBorder }
       })
-      contents += new Label("Overall Quote") { border = Swing.EtchedBorder }
-      contents += new Label("Winning") { border = Swing.EtchedBorder }
-      winnings.foreach(winning => {
+      contents += new Label("Overall Quote") { border = EtchedBorder }
+      contents += new Label("Winning") { border = EtchedBorder }
+      results.foreach(winning => {
         winning.combination.foreach(quote => {
           if (quote.winning) {
             contents += new Label(quote.quote.toString) {
-              border = Swing.EtchedBorder
-              foreground_=(java.awt.Color.WHITE)
-              opaque_=(true)
-              background_=(java.awt.Color.GREEN)
-              font_=(new java.awt.Font("Lucida Sans Typewriter", java.awt.Font.BOLD, 12))
+              border = EtchedBorder
+              foreground = WHITE
+              opaque = true
+              background = GREEN
+              font = new Font("Lucida Sans Typewriter", Font.BOLD, 12)
             }
           } else {
             contents += new Label(quote.quote.toString) {
-              border = Swing.EtchedBorder
-              foreground_=(java.awt.Color.WHITE)
-              opaque_=(true)
-              background_=(java.awt.Color.RED)
-              font_=(new java.awt.Font("Lucida Sans Typewriter", java.awt.Font.BOLD, 12))
+              border = EtchedBorder
+              foreground = WHITE
+              opaque = true
+              background = RED
+              font = new Font("Lucida Sans Typewriter", Font.BOLD, 12)
             }
           }
         })
         contents += new Label(winning.overalQuote.toString)
         if (winning.winning > 0) {
-          contents += new Label(winning.winning.toString + " Euro") {
-            border = Swing.EtchedBorder
-            foreground_=(java.awt.Color.WHITE)
-            opaque_=(true)
-            background_=(java.awt.Color.GREEN)
-            font_=(new java.awt.Font("Lucida Sans Typewriter", java.awt.Font.BOLD, 12))
+          contents += new Label(winning.winning + " Euro") {
+            border = EtchedBorder
+            foreground = WHITE
+            opaque = true
+            background = GREEN
+            font = new Font("Lucida Sans Typewriter", Font.BOLD, 12)
           }
         } else {
-          border = Swing.EtchedBorder
-          contents += new Label(winning.winning.toString + " Euro") {
-            font_=(new java.awt.Font("Lucida Sans Typewriter", java.awt.Font.BOLD, 12))
+          border = EtchedBorder
+          contents += new Label(winning.winning + " Euro") {
+            font = new Font("Lucida Sans Typewriter", Font.BOLD, 12)
           }
         }
 
       })
       resultTable.contents += new FlowPanel {
-        contents += new Label("Your overall winning:")
-        val winning = winnings.toList map { _.winning }
-        contents += new Label((winning.sum).toString() + " Euro")
+        contents += new Label("Your overall winning: " + Utils.limitDecimals(results.map { _.winning }.sum, 2) + " Euro") {
+          font = new Font("Lucida Sans Typewriter", Font.BOLD, 25)  
+        }
       }
     }
     resultTable.revalidate
@@ -275,9 +278,10 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
 
   def updateGamesListView = {
     val games = gamedays.find(gameday => gameday.no == controller.chosenGameDay.no).get.games
-    matchesListView.listData_=(games)
+    matchesListView.listData = games
   }
-  controller.chooseGameDay(19)
+  
+  controller.chooseGameDay(controller.getGameDays.head.no)
   minimumSize = new Dimension(1024, 786)
   peer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
   centerOnScreen()
@@ -287,7 +291,7 @@ class BetCalculatorView(var controller: BaseController) extends Frame with Nativ
 }
 
 trait NativeLookAndFeel {
-  import javax.swing._
-  try UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
-  catch { case _ => UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName) }
+  import javax.swing.UIManager._
+  try setLookAndFeel(getSystemLookAndFeelClassName)
+  catch { case _ => setLookAndFeel(getCrossPlatformLookAndFeelClassName) }
 }
